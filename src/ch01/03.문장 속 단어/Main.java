@@ -7,22 +7,16 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		String front = st.nextToken(), first = front, second = "";
+		String first = "";
 		while (st.hasMoreTokens()) {
 			String str = st.nextToken();
 			
 			if(str.length() > first.length()) {
 				first = str;
-			}else if(str.length() == first.length()) {
-				second = str;
 			}
 		}
 		
-		if(first.length() == second.length()) {
-			bw.write(front);
-		}else {
-			bw.write(first);
-		}
+		bw.write(first);
 
 		bw.flush();
 		bw.close();
