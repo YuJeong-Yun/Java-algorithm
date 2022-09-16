@@ -6,33 +6,36 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+		int N = Integer.parseInt(br.readLine());
+		int[][] students = new int[N][5];
+		int[] cnt = new int[N];
 
-		int[][] scores = new int[N][M];
-
-		for (int i = 0; i < M; i++) {
-			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < N; j++) {
-				int num = Integer.parseInt(st.nextToken());
-				scores[num - 1][i] = j;
+		for (int i = 0; i < N; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < 5; j++) {
+				students[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
 
-		int cnt = 0;
 		for (int i = 0; i < N; i++) {
-			out:for (int j = 0; j < N ; j++) {
-				for (int k = 0; k < M; k++) {
-					if (scores[i][k] <= scores[j][k]) {
-						continue out;
+			for (int j = 0; j < N; j++) {
+				for (int k = 0; k < 5; k++) {
+					if(students[i][k]==students[j][k]){
+						cnt[i]++;
+						break;
 					}
 				}
-				cnt++;
 			}
 		}
 
-		bw.write(cnt + "");
+		int max = Arrays.stream(cnt).max().getAsInt();
+		for (int i = 0; i < N; i++) {
+			if (cnt[i] == max) {
+				bw.write(i + 1 + "");
+				break;
+			}
+		}
+
 		bw.flush();
 		bw.close();
 		br.close();
