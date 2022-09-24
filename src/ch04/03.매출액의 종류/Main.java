@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-import javax.imageio.metadata.IIOInvalidTreeException;
-
 public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,15 +12,25 @@ public class Main {
 		st = new StringTokenizer(br.readLine());
 
 		int[] nums = new int[N];
-		for(int i=0; i<N ;i++) {
+		for (int i = 0; i < N; i++) {
 			nums[i] = Integer.parseInt(st.nextToken());
 		}
-		for (int i = 0; i <= N-K; i++) {
-			Set<Integer> set = new HashSet<Integer>();
-			for(int j=i; j<i+K; j++) {
-				set.add(nums[j]);
+
+		Map<Integer, Integer> map = new HashMap<>();
+		for (int i = 0; i < K; i++) {
+			map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+		}
+		bw.write(map.size() + " ");
+
+		for (int i = 1; i <= N - K; i++) {
+			if (map.get(nums[i - 1]) == 1) {
+				map.remove(nums[i - 1]);
+			} else {
+				map.put(nums[i - 1], map.get(nums[i - 1]) - 1);
 			}
-			bw.write(set.size()+" ");
+			map.put(nums[K + i - 1], map.getOrDefault(nums[K + i - 1], 0) + 1);
+			
+			bw.write(map.size()+" ");
 		}
 
 		bw.flush();
